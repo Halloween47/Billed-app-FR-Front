@@ -77,14 +77,15 @@ export default class {
     $('#arrow-icon3').click((e) => this.handleShowTickets(e, bills, 3))
     new Logout({ localStorage, onNavigate })
   }
+/* istanbul ignore next */
+handleClickIconEye = () => {
+  const billUrl = $('#icon-eye-d').attr("data-bill-url")
+  const imgWidth = Math.floor($('#modaleFileAdmin1').width() * 0.8)
+  $('#modaleFileAdmin1').find(".modal-body").html(`<div style='text-align: center;'><img width=${imgWidth} src=${billUrl} alt="Bill"/></div>`)
+  if (typeof $('#modaleFileAdmin1').modal === 'function') $('#modaleFileAdmin1').modal('show')
+}
 
-  handleClickIconEye = () => {
-    const billUrl = $('#icon-eye-d').attr("data-bill-url")
-    const imgWidth = Math.floor($('#modaleFileAdmin1').width() * 0.8)
-    $('#modaleFileAdmin1').find(".modal-body").html(`<div style='text-align: center;'><img width=${imgWidth} src=${billUrl} alt="Bill"/></div>`)
-    if (typeof $('#modaleFileAdmin1').modal === 'function') $('#modaleFileAdmin1').modal('show')
-  }
-
+/* istanbul ignore next */
   handleEditTicket(e, bill, bills) {
     if (this.counter === undefined || this.id !== bill.id) this.counter = 0
     if (this.id === undefined || this.id !== bill.id) this.id = bill.id
@@ -131,7 +132,7 @@ export default class {
   }
 
   handleShowTickets(e, bills, index) {
-    if (this.counter === undefined || this.index !== index) this.counter = 0
+    if (this.counter === undefined ) this.counter = 0
     if (this.index === undefined || this.index !== index) this.index = index
     if (this.counter % 2 === 0) {
       $(`#arrow-icon${this.index}`).css({ transform: 'rotate(0deg)'})

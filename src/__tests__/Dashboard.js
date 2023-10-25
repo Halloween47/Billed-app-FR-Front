@@ -83,7 +83,7 @@ describe('Given I am connected as an Admin', () => {
       await waitFor(() => screen.getByTestId(`open-billUIUZtnPQvnbFnB0ozvJh`) )
       expect(screen.getByTestId(`open-billUIUZtnPQvnbFnB0ozvJh`)).toBeTruthy()
 
-      icon3.addEventListener('click', handleShowTickets3)
+      icon3.Listener('click', handleShowTickets3)
       userEvent.click(icon3)
       expect(handleShowTickets3).toHaveBeenCalled()
       await waitFor(() => screen.getByTestId(`open-billBeKy5Mo4jkmdfPGYpTxZ`) )
@@ -109,7 +109,7 @@ describe('Given I am connected as an Admin', () => {
       document.body.innerHTML = DashboardUI({ data: { bills } })
       const handleShowTickets1 = jest.fn((e) => dashboard.handleShowTickets(e, bills, 1))
       const icon1 = screen.getByTestId('arrow-icon1')
-      icon1.addEventListener('click', handleShowTickets1)
+      icon1.Listener('click', handleShowTickets1)
       userEvent.click(icon1)
       expect(handleShowTickets1).toHaveBeenCalled()
       expect(screen.getByTestId(`open-bill47qAXb6fIm2zOKkLzMro`)).toBeTruthy()
@@ -138,7 +138,7 @@ describe('Given I am connected as an Admin', () => {
 
       const handleShowTickets1 = jest.fn((e) => dashboard.handleShowTickets(e, bills, 1))
       const icon1 = screen.getByTestId('arrow-icon1')
-      icon1.addEventListener('click', handleShowTickets1)
+      icon1.Listener('click', handleShowTickets1)
       userEvent.click(icon1)
       expect(handleShowTickets1).toHaveBeenCalled()
       expect(screen.getByTestId(`open-bill47qAXb6fIm2zOKkLzMro`)).toBeTruthy()
@@ -179,7 +179,7 @@ describe('Given I am connected as Admin, and I am on Dashboard page, and I click
 
       const acceptButton = screen.getByTestId("btn-accept-bill-d")
       const handleAcceptSubmit = jest.fn((e) => dashboard.handleAcceptSubmit(e, bills[0]))
-      acceptButton.addEventListener("click", handleAcceptSubmit)
+      acceptButton.Listener("click", handleAcceptSubmit)
       fireEvent.click(acceptButton)
       expect(handleAcceptSubmit).toHaveBeenCalled()
       const bigBilledIcon = screen.queryByTestId("big-billed-icon")
@@ -203,7 +203,7 @@ describe('Given I am connected as Admin, and I am on Dashboard page, and I click
       })
       const refuseButton = screen.getByTestId("btn-refuse-bill-d")
       const handleRefuseSubmit = jest.fn((e) => dashboard.handleRefuseSubmit(e, bills[0]))
-      refuseButton.addEventListener("click", handleRefuseSubmit)
+      refuseButton.Listener("click", handleRefuseSubmit)
       fireEvent.click(refuseButton)
       expect(handleRefuseSubmit).toHaveBeenCalled()
       const bigBilledIcon = screen.queryByTestId("big-billed-icon")
@@ -230,7 +230,7 @@ describe('Given I am connected as Admin and I am on Dashboard page and I clicked
 
       const handleClickIconEye = jest.fn(dashboard.handleClickIconEye)
       const eye = screen.getByTestId('icon-eye-d')
-      eye.addEventListener('click', handleClickIconEye)
+      eye.Listener('click', handleClickIconEye)
       userEvent.click(eye)
       expect(handleClickIconEye).toHaveBeenCalled()
 

@@ -15,30 +15,87 @@ export default class NewBill {
     this.billId = null
     new Logout({ document, localStorage, onNavigate })
   }
-  handleChangeFile = e => {
-    e.preventDefault()
-    const file = this.document.querySelector(`input[data-testid="file"]`).files[0]
-    const filePath = e.target.value.split(/\\/g)
-    const fileName = filePath[filePath.length-1]
-    const formData = new FormData()
-    const email = JSON.parse(localStorage.getItem("user")).email
-    formData.append('file', file)
-    formData.append('email', email)
+  // handleChangeFile = e => {
+  //   e.preventDefault()
+  //   const file = this.document.querySelector(`input[data-testid="file"]`).files[0]
+  //   console.log(file.name);
+  //   this.fileName = file.name
+  //   // if (file) {
+  //   //   if (file.type !== "image/png" && file.type !== "image/jpeg") {
+  //   //     alert("Seuls les fichiers PNG et JPG sont autorisés.");
+  //   //     return; // Arrêtez l'exécution de la fonction si le fichier n'est pas PNG ou JPG.
+  //   //   }
+  //   //   // Si le fichier est au format PNG ou JPG, vous pouvez l'ajouter à formData et continuer avec l'envoi de la requête.
+  //   //   const filePath = e.target.value.split(/\\/g)
+  //   // const fileName = filePath[filePath.length-1]
+  //   // const formData = new FormData()
+  //   // const email = JSON.parse(localStorage.getItem("user")).email
+  //   // formData.append('file', file)
+  //   // formData.append('email', email)
+  //   // } else {
+  //   //   alert("Aucun fichier sélectionné.");
+  //   // }
+  //   const filePath = e.target.value.split(/\\/g)
+  //   const fileName = filePath[filePath.length-1]
+  //   const formData = new FormData()
+  //   const email = JSON.parse(localStorage.getItem("user")).email
+  //   formData.append('file', file)
+  //   formData.append('email', email)
 
-    this.store
-      .bills()
-      .create({
-        data: formData,
-        headers: {
-          noContentType: true
-        }
-      })
-      .then(({fileUrl, key}) => {
-        console.log(fileUrl)
-        this.billId = key
-        this.fileUrl = fileUrl
-        this.fileName = fileName
-      }).catch(error => console.error(error))
+  //   this.store
+  //     .bills()
+  //     .create({
+  //       data: formData,
+  //       headers: {
+  //         noContentType: true
+  //       }
+  //     })
+  //     .then(({fileUrl, key}) => {
+  //       console.log(fileUrl)
+  //       this.billId = key
+  //       this.fileUrl = fileUrl
+  //       console.log(this.fileUrl);
+  //       this.fileName = fileName
+  //     }).catch(error => console.error(error))
+  // }
+  handleChangeFile = e => {
+    e.preventDefault();
+    const fileInput = this.document.querySelector(`input[data-testid="file"]`);
+    const file = fileInput.files[0];
+
+    if (file) {
+      const allowedExtensions = ['jpg', 'jpeg', 'png'];
+      const fileName = file.name.toLowerCase();
+      const fileExtension = fileName.split('.').pop();
+
+      if (!allowedExtensions.includes(fileExtension)) {
+        alert("Seuls les fichiers JPG, JPEG et PNG sont autorisés.");
+        fileInput.value = ""; // Effacez la sélection du fichier
+        return; // Arrêtez l'exécution de la fonction si l'extension n'est pas autorisée.
+      }
+
+      const formData = new FormData();
+      const email = JSON.parse(localStorage.getItem("user")).email;
+      formData.append('file', file);
+      formData.append('email', email);
+      this.store
+        .bills()
+        .create({
+          data: formData,
+          headers: {
+            noContentType: true
+          }
+        })
+        .then(({ fileUrl, key }) => {
+          console.log(fileUrl);
+          this.billId = key;
+          this.fileUrl = fileUrl;
+          this.fileName = fileName;
+        })
+        .catch(error => console.error(error));
+    } else {
+      alert("Aucun fichier sélectionné.");
+    }
   }
   handleSubmit = e => {
     e.preventDefault()
@@ -62,6 +119,7 @@ export default class NewBill {
   }
 
   // not need to cover this function by tests
+  /* istanbul ignore next */
   updateBill = (bill) => {
     if (this.store) {
       this.store
